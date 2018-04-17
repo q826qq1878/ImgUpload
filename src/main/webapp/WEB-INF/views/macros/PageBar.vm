@@ -1,0 +1,79 @@
+##
+## $Id$
+## 
+
+
+##	PageBarII 翻页栏（可以放到网页任意位置）
+##	但必须：
+##	1、传入$formname指定Form名称。
+##	2、将以下三个隐藏字段复制到指定的Form表单里面。
+## 	<input type="hidden" name="actionType" value="0" id ="actionType">
+## 	<input type="hidden" name="page" value="$!pageBean.page" id ="page">
+## 	<input type="hidden" name="pageSize" value="$!pageBean.getPageSize()" id ="pageSize">
+##   
+#macro(PageBarII1 $formname)
+	#PageBarII($formname 1)
+#end
+#macro(PageBarII $formname $type)
+<script language="JavaScript">
+
+
+function isDigit(NUM) 
+{ 
+	var i,j,strTemp; 
+	strTemp="0123456789"; 
+	if (NUM.length==0) 
+		return false ;
+	for (i=0;i<NUM.length;i++) 
+	{ 
+		j=strTemp.indexOf(NUM.charAt(i)); 
+		if (j==-1) 
+		{ 
+			return false; 
+		} 
+	} 
+	return true; 
+}
+
+
+function TurnPage (PageNum)
+{	
+	var frm=document.forms["$!{formname}"];
+	if (PageNum=="TP") PageNum = frm.topage.value;
+	if(!isDigit(PageNum)){
+		alert("请输入合法的页数！");
+	}	
+  	else{
+		document.getElementById("page").value = PageNum;
+		frm.submit();
+	}
+}
+
+</script>
+	<div class="bottom_page" style="margin-top:7px" align="right" width="100%">
+				共 <span class="f-bold">$!pageBean.count</span>条信息，<span class="f-bold">$!pageBean.pages</span>页，
+				<img height="15" style="margin-bottom:5px;cursor:pointer;" src="resources/images/pre.gif" width="46" align="absbottom" border="0" onclick="TurnPage ($pageBean.prePageNo)"/>	
+					#set($begin = 1) 
+					#if($!pageBean.page > 2)
+					 #set($begin = $!pageBean.page - 2) 
+					 #end 
+					 #set($last = $begin + 4) #if($last > $!pageBean.pages) 
+					 #set($last = $!pageBean.pages) 
+					 #end 
+					 #foreach($index in [$begin..$last])
+					 	 #if($index==$!pageBean.page) 
+						  <b>$index</b>
+						 #else <a href="javascript:TurnPage ($index)" style="cursor:hand;">$index</a>
+						 #end 
+					 #end	 
+				<img height="15" style="margin-bottom:5px;cursor:pointer;" src="resources/images/next.gif" width="46" align="absbottom" border="0" onclick="TurnPage ($pageBean.nextPageNo)" />
+				到第
+
+				<input name="topage" type="text" size="3" value="$!pageBean.page" />
+	
+				页
+
+				<input class="i_bt" type="button" value="确定" name="go" onclick="TurnPage ('TP')" />
+   
+</div>
+#end

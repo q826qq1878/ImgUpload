@@ -1,0 +1,17 @@
+#**
+ * macros-default.vm
+ *
+ * @author 
+ * @since 1.0
+ *#
+
+#**
+ * tablerows
+ *
+ * Macro to print table.
+ *#
+#macro( tablerows $color $somelist )
+	#foreach( $something in $somelist )
+	    <tr><td bgcolor=$color>$something</td></tr>
+	#end
+#end

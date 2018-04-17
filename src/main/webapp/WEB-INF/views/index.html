@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../resources/webuploader.css" />
+</head>
+<body>
+<div id="uploader-demo">
+    <!--用来存放item-->
+    <img src="" id="imgId1_img">
+    <div id="imgId1_btn">selectIMG1</div>
+
+    <!--用来存放item-->
+    <img src="" id="imgId2_img">
+    <div id="imgId2_btn">selectIMG2</div>
+
+</div>
+</body>
+<script type="text/javascript" src="../resources/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../resources/webuploader.js"></script>
+<script type="text/javascript" src="../resources/upload.js"></script>
+<script>
+    $(function(){
+        imgUpload("imgId1");
+        imgUpload("imgId2");
+    });
+
+    function imgId1_callBack(data){
+        console.log(data);
+        alert(data.ret);
+    }
+
+
+    function imgId2_callBack(data){
+        console.log(data);
+        alert(data.ret);
+    }
+
+</script>
+</html>
